@@ -33,5 +33,18 @@ class MilkshakesController < ApplicationController
 
     def edit
         @milkshake = Milkshake.find(params[:id])
+        @ingredients = Ingredient.all
+    end
+
+    def update
+        @milkshake = Milkshake.find(params[:id])
+        whitelisted_params = params.require(:milkshake).permit(:name, :description, :price, :pic, ingredient_ids: [])
+        
+        if @milkshake.update(whitelisted_params)
+            redirect_to milkshake_path(params[:id])
+        else
+            @ingredients = Ingredient.all
+            render "edit"
+        end
     end
 end

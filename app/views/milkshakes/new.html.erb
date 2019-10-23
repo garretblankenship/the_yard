@@ -1,30 +1,3 @@
 <h1>Create Milkshake</h1>
 
-<% if @milkshake.errors.any? %>
-    <% for error in @milkshake.errors.full_messages %>
-        <p><%= error %></p>
-    <% end %>
-<% end %>
-
-<%= form_with model: @milkshake, local: true do |form| %>
-    <div>
-        <%= form.label :name %>
-        <%= form.text_field :name %>
-    </div>
-    <div>
-        <%= form.label :description %>
-        <%= form.text_area :description %>
-    </div>
-    <div>
-        <%= form.label :price, "Price (in cents)" %>
-        <%= form.number_field :price, min: 0 %>
-    </div>
-    <div>
-        <%= form.label :pic %>
-        <%= form.file_field :pic, accept: "image/png,image/gif,image/jpeg,image/jpg" %>
-    </div>
-    <div>
-        <%= form.collection_check_boxes :ingredient_ids, @ingredients, :id, :name %>
-    </div>
-    <%= form.submit %>
-<% end %>
+<%= render "form", milkshake: @milkshake, ingredients: @ingredients %>
