@@ -1,1 +1,3 @@
 <%= @milkshake.to_json %>
+
+<%= link_to "edit", edit_milkshake_path(@milkshake) if current_user.id == @milkshake.user_id %>

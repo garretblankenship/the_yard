@@ -1,6 +1,7 @@
 class MilkshakesController < ApplicationController
     before_action :authenticate_user!
-    before_action :set_milkshake, only: [:show, :edit, :update]
+    before_action :set_milkshake, only: [:show]
+    before_action :set_user_milkshake, only: [:edit, :update]
 
     def index
         if params[:search] && !params[:search].empty?
@@ -49,5 +50,13 @@ class MilkshakesController < ApplicationController
 
     def set_milkshake
         @milkshake = Milkshake.find(params[:id])
+    end
+
+    def set_user_milkshake
+        @milkshake = current_user.milkshakes.find_by_id(params[:id])
+
+        if @milkshake == nil
+            redirect_to milkshakes_path
+        end
     end
 end
