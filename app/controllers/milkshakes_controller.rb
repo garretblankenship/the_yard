@@ -30,4 +30,8 @@ class MilkshakesController < ApplicationController
             redirect_to milkshake_path(@milkshake)
         end
     end
+
+    def edit
+        @milkshake = Milkshake.find(params[:id])
+    end
 end
