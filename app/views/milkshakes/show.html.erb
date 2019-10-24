@@ -1,3 +1,18 @@
 <%= @milkshake.to_json %>
 
 <%= link_to "edit", edit_milkshake_path(@milkshake) if current_user.id == @milkshake.user_id %>
+
+<div>
+    <button data-stripe="payment">Buy <%= number_to_currency(@milkshake.price / 100.0) %></button>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+    document.querySelector("[data-stripe='payment']").addEventListener("click", () => {
+        const stripe = Stripe("<%= @public_key %>");
+        stripe.redirectToCheckout({
+            sessionId: "<%= @session_id %>"
+        });
+    });
+</script>

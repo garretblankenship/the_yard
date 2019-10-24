@@ -13,7 +13,7 @@ class MilkshakesController < ApplicationController
 
     def show
         session = Stripe::Checkout::Session.create(
-            payment_method_type: ["card"],
+            payment_method_types: ["card"],
             customer_email: current_user.email,
             line_items: [
                 {
@@ -34,7 +34,8 @@ class MilkshakesController < ApplicationController
             cancel_url: "#{root_url}milkshakes/#{@milkshake.id}"
         )
 
-        @session_id = sesson.id
+        @session_id = session.id
+        @public_key = Rails.application.credentials.dig(:stripe, :public_key)
     end
 
     def new
